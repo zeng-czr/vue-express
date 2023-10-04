@@ -14,8 +14,12 @@
               个人中心<i class="el-icon-caret-bottom el-icon--right"></i>
             </span>
             <el-dropdown-menu slot="dropdown">
+              <router-link to="/">
               <el-dropdown-item>Dashboard</el-dropdown-item>
-              <el-dropdown-item>个人中心</el-dropdown-item>
+              </router-link>
+              <router-link to="/about/index">
+                <el-dropdown-item>个人中心</el-dropdown-item>
+              </router-link>
               <el-dropdown-item divided>退出登录</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>

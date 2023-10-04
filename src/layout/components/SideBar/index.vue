@@ -11,7 +11,7 @@
       </el-menu-item>
     </template>
     <!-- 子组件有1个 -->
-    <template v-if="item.children && item.children.length == 1">
+    <template v-if="item.children && item.children.length == 1 && !item.hidden">
       <el-menu-item
         :index="goRoute(item.children[0].path)"
         v-if="!item.children[0].hidden"

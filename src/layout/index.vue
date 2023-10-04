@@ -55,9 +55,13 @@ export default {
 };
 </script>
 <style>
-app-container{
+app-wrapper{
   position: relative;
   width: 100%;
   height: 100%;
 }
+/* .el-main{
+  margin: 0 !important;
+  padding: 0 !important;
+} */
 </style>

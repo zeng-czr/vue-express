@@ -37,6 +37,20 @@ export const constantRouters = [
       }
     ]
   },
+  {
+    path: '/about',
+    component: Layout,
+    redirect: '/about/index',
+    hidden: true,
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/aboutme/index.vue'),
+        name: 'AboutMe',
+        meta: { title: 'AboutMe', icon: 'user', noCache: true }
+      }
+    ]
+  }
 ]
 
 export const asyncRoutes = [
