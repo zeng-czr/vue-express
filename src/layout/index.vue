@@ -4,13 +4,16 @@
       <el-aside style="overflow: hidden;width:200px">
         <el-menu
         ref="menu"
+        :default-active="this.$route.path"
         :unique-opened="false"
         router>
         <sidebar v-for = "item in permission_routes" :item = "item" :key="item.path" :base-path = "item.path"/>
         </el-menu>
       </el-aside>
       <el-container>
-        <el-header style="background-color: #B3C0D1;">Header</el-header>
+        <el-header style="background-color: #409EFF;">
+          <Header></Header>
+        </el-header>
         <el-main>
           <app-main/>
         </el-main>
@@ -20,17 +23,18 @@
 </template>
 
 <script>
-import {AppMain , Sidebar} from './components/index.js'
+import {AppMain , Sidebar , Header} from './components/index.js'
 import { mapGetters } from 'vuex';
 export default {
   name: 'layout',
   components:{
     AppMain,
-    Sidebar
+    Sidebar,
+    Header,
   },
   data() {
     return {
-
+      
     };
   },
 

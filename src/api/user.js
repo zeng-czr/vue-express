@@ -12,3 +12,9 @@ export function loginAll () {
     method: 'get',
   })
 }
+export function getAllUser () {
+  return instance({
+    url: '/users/all',
+    method: 'get',
+  })
+}
