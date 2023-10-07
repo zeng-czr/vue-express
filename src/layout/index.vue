@@ -12,7 +12,7 @@
       </el-aside>
       <el-container>
         <el-header style="background-color: #409EFF;">
-          <Header></Header>
+          <app-header></app-header>
         </el-header>
         <el-main>
           <app-main/>
@@ -23,14 +23,14 @@
 </template>
 
 <script>
-import {AppMain , Sidebar , Header} from './components/index.js'
+import {AppMain , Sidebar , AppHeader} from './components/index.js'
 import { mapGetters } from 'vuex';
 export default {
   name: 'layout',
   components:{
     AppMain,
     Sidebar,
-    Header,
+    AppHeader,
   },
   data() {
     return {

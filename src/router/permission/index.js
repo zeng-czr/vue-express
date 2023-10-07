@@ -15,15 +15,18 @@ router.beforeEach(async (to, from, next) => {
   if (token) {
     if (to.path === '/login') {
       next({ path: '/' })
+      NProgress.done()
     }
     else {
       const hasRoles = store.getters.roles && store.getters.roles.length > 0
+      console.log(hasRoles)
       if (hasRoles) {
         next()
       }
       else {
+        console.log("router permission执行了")
         const data = await store.dispatch('user/getInfo')
-        const roles = data
+        const roles = data.role
         const accessedRoutes = await store.dispatch('permission/generateRoutes', roles)
         console.log(accessedRoutes)
 

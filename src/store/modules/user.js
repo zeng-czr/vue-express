@@ -26,10 +26,13 @@ const actions = {
     const { username, password } = userInfo
     return new Promise((resolve, reject) => {
       login({ username: username.trim(), password: password }).then(response => {
+        console.log(response)
         const data = response
         if (data.length > 0) {
           setToken(data[0].token)
           commit('SET_TOKEN', data[0].token)
+          commit('SET_AVATOR', data[0].avatar)
+          window.localStorage.setItem('userInfo', JSON.stringify(data[0]))
           resolve()
         }
         else {
@@ -41,22 +44,25 @@ const actions = {
     })
   },
   getInfo ({ commit }) {
-    return new Promise((resolve) => {
-      commit('SET_ROLES', ['admin'])
-      resolve(['admin'])
-      // login({ username: "admin", password: "123456" }).then(response => {
-      //   const data = response
-      //   if (data.length > 0) {
-      //     console.log(data)
-      //     commit('SET_ROLES', data[0].role)
-      //     resolve()
-      //   }
-      //   else {
-      //     reject(new Error("请确认用户名和密码后再次登录"))
-      //   }
-      // }).catch(error => {
-      //   reject(error)
-      // })
+    return new Promise((resolve, reject) => {
+      // commit('SET_ROLES', ['admin'])
+      // resolve(['admin'])
+      let roleList = []
+      login({ username: "admin", password: "123456" }).then(response => {
+        const data = response
+        if (data.length > 0) {
+          console.log(data)
+          commit('SET_ROLES', data[0].role)
+          commit('SET_NAME', data[0].name)
+          commit('SET_AVATOR', data[0].avatar)
+          resolve(data[0])
+        }
+        else {
+          reject(new Error("重新登陆后在访问登录"))
+        }
+      }).catch(error => {
+        reject(error)
+      })
     })
   }
 }

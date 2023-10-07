@@ -6,7 +6,8 @@
     <div class="info-container">
       <div class="info">
         <div class="vartar">
-          <img src="../../../assets/vartar.jpg" alt="">
+          <img v-if="imageUrl" :src="imageUrl" alt="">
+          <img v-else src="@/assets/vartar.jpg" alt="">
         </div>
         <div class="aboutMe">
           <el-dropdown trigger="click">
@@ -36,16 +37,25 @@ export default {
 
   data() {
     return {
-      
+      imageUrl:'',
     };
   },
   components:{
     BreadCrumb
   },
-  mounted() {
-    
+  computed:{
+    state_avatar(){
+      return this.$store.state.user.avatar
+    }
   },
-
+  mounted() {
+    this.imageUrl = this.$store.getters.avator
+  },
+  watch:{
+    state_avatar(newVal){
+      this.imageUrl = newVal
+    }
+  },
   methods: {
     
   },

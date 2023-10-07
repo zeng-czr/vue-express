@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container">
     <div class="header-container">
       <el-button type="primary">添加</el-button>
       <el-button type="primary">导出EXCEL</el-button>
@@ -67,3 +67,17 @@ export default {
   },
 };
 </script>
+<style lang="scss" scoped>
+// .container{
+//   position: relative;
+//   .header-container{
+//     z-index: 2;
+//     position:absolute;
+//     right: 28px;
+//   }
+//   .main-container{
+//     padding-top: 50px;
+//   }
+// }
+
+</style>

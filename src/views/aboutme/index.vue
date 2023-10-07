@@ -7,9 +7,10 @@
         </div>
         <div class="avatar">
           <div class="img">
-            <input ref="input" type="file" @change="uploadImg" style="display: none;">
-          <img ref="img" @click="changeImg()" src="../../assets/vartar.jpg" alt="">
-          <!-- <img ref="img" @click="changeImg()" src="http://localhost:8080/07a8ccc9-1dc6-4546-9267-8bcd17896916 " alt="">-->
+            <input ref="input" type="file" @change="uploadLocal" style="display: none;">
+          <img v-if="imageUrl" ref="img" @click="changeImg" :src="imageUrl" alt="">
+          <img v-else ref="img" @click="changeImg" src="@/assets/vartar.jpg" alt="">
+          <!-- <img ref="img" @click="uploadLocal()" src="../../assets/vartar.jpg" alt=""> -->
             
         </div>
           <div class="info">
@@ -47,44 +48,70 @@
     </div>
     <div class="userDetail">
       <el-card class="box-card">
-        <div slot="header" class="clearfix">
-          <span>About Me</span>
-        </div>
-        <div v-for="o in 14" :key="o" class="text item">
-          {{'列表内容 ' + o }}
-        </div>
+        <el-tabs v-model="activeTab">
+          <!-- <el-tab-pane label="" name="first">用户管理</el-tab-pane> -->
+          <el-tab-pane label="message" name="message">
+            <message/>
+          </el-tab-pane>
+          <el-tab-pane label="account" name="account">
+            <account/>
+          </el-tab-pane>
+          <el-tab-pane label="about" name="about">
+            <about/>
+          </el-tab-pane>
+        </el-tabs>
       </el-card>
     </div>
   </div>
 </template>
 
 <script>
+import message from './components/message.vue'
+import account from './components/account.vue'
+import about from './components/about.vue'
+import {uploadImg} from '@/api/user.js'
 export default {
   name: 'aboutme',
 
   data() {
     return {
-      
+      imageUrl:'',
+      activeTab:'message',
     };
   },
-
-  mounted() {
-    
+  components:{
+    message,
+    account,
+    about
   },
-
+  mounted() {
+    this.imageUrl = this.$store.getters.avator
+  },
+  computed:{
+    imgURL(){
+      return this.$store.getters.avator
+    }
+  },
+  watch:{
+    imgURL(newV){
+      this.imageUrl = newV
+    }
+  },
   methods: {
-    uploadImg(e){
-      console.log(e.target.files)
+    uploadLocal(e){
       const file = e.target.files[0]
-      console.log(new Blob(file))
-      const url = window.URL.createObjectURL(file)
-      this.$refs.img.src=url
-      console.log('上传照片')
-      console.log(url)
+      let formData = new FormData()
+      formData.append('file', file)
+      uploadImg(formData).then(res => {
+        // this.imageUrl = res.data.imgUrl
+        this.$store.commit("user/SET_AVATOR",res.data.imgUrl)
+        // this.$store.dispatch('user/getInfo')
+      })
     },
     changeImg(){
       this.$refs.input.click()
-    }
+    },
+    
   },
 };
 </script>
@@ -123,6 +150,9 @@ export default {
   }
   .userDetail{
     flex: 3;
+    .el-card{
+      min-height: 680px;
+    }
   }
 }
 </style>

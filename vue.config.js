@@ -4,6 +4,7 @@ function resolve (dir) {
   return path.join(__dirname, dir)
 }
 module.exports = {
+  lintOnSave: false,
   devServer: {
     open: true,
     proxy: {

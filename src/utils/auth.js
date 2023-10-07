@@ -1,3 +1,4 @@
+// Cookies本地存储--持久化
 import Cookies from 'js-cookie'
 // import store from '@/store'
 
