@@ -8,10 +8,10 @@
         <div class="avatar">
           <div class="img">
             <input ref="input" type="file" @change="uploadLocal" style="display: none;">
-          <img v-if="imageUrl" ref="img" @click="changeImg" :src="imageUrl" alt="">
-          <img v-else ref="img" @click="changeImg" src="@/assets/vartar.jpg" alt="">
-          <!-- <img ref="img" @click="uploadLocal()" src="../../assets/vartar.jpg" alt=""> -->
-            
+            <img v-if="imageUrl" ref="img" @click="changeImg" :src="imageUrl" alt="">
+            <img v-else ref="img" @click="changeImg" src="@/assets/vartar.jpg" alt="">
+            <!-- <img ref="img" @click="uploadLocal()" src="../../assets/vartar.jpg" alt=""> -->
+            <button @click="imageShow">dialogShow</button> 
         </div>
           <div class="info">
             <span>Super Admin</span>
@@ -62,6 +62,19 @@
         </el-tabs>
       </el-card>
     </div>
+    <el-dialog
+      title="头像裁剪"
+      :visible.sync="dialogShow"
+      :show-close="false"
+      width="45%"
+      :close-on-click-modal="false"
+      >
+      <Cropper :cropperImg="imageUrl"></Cropper>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogShow = false">取 消</el-button>
+        <el-button type="primary" @click="dialogShow = false">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -69,6 +82,7 @@
 import message from './components/message.vue'
 import account from './components/account.vue'
 import about from './components/about.vue'
+import Cropper from '@/components/vueCropper/index.vue'
 import {uploadImg} from '@/api/user.js'
 export default {
   name: 'aboutme',
@@ -77,12 +91,14 @@ export default {
     return {
       imageUrl:'',
       activeTab:'message',
+      dialogShow:false,
     };
   },
   components:{
     message,
     account,
-    about
+    about,
+    Cropper
   },
   mounted() {
     this.imageUrl = this.$store.getters.avator
@@ -98,6 +114,9 @@ export default {
     }
   },
   methods: {
+    imageShow(){
+      this.dialogShow = true
+    },
     uploadLocal(e){
       const file = e.target.files[0]
       let formData = new FormData()

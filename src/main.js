@@ -9,11 +9,12 @@ import 'element-ui/lib/theme-chalk/index.css'
 import 'normalize.css/normalize.css'//浏览器重置样式
 // import './styles/element-variables.scss'
 
-
+Vue.use(window['vue-cropper'].default)
 import './icons' // icon
 import './router/permission'
 
 Vue.config.productionTip = false
+
 
 Vue.use(Element);
 new Vue({

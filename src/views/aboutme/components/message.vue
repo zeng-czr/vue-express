@@ -12,7 +12,7 @@
       </el-carousel>
     </div>
     <div class="btn">
-        <i class="el-icon-plus"></i>
+        <i class="el-icon-plus" @click="addDialog = true"></i>
         <i class="el-icon-delete"></i>
         <!-- <el-button type="success">添加</el-button> -->
         <!-- <el-button type="danger">删除</el-button> -->
@@ -23,66 +23,89 @@
         :data="tableData"
         tooltip-effect="dark"
         style="width: 100%"
+        height="330px"
         :header-cell-style="{'text-align':'center'}"
         :cell-style="{'text-align':'center'}"
         :show-header="true"
-        @selection-change="handleSelectionChange">
+        >
         <el-table-column
           type="selection"
           width="55">
         </el-table-column>
         <el-table-column
-          prop="data"
-          label="日期"
+          prop="m_id"
+          label="信息序号"
           width="120px">
         </el-table-column>
         <el-table-column
-          prop="done"
+          prop="data"
+          label="日期"
+          width="120px">
+          <template slot-scope="scope">
+            <span>{{ scope.row.data.slice(0,10) }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column
+          prop="content"
           label="任务"
           show-overflow-tooltip>
         </el-table-column>
         <el-table-column
           label="操作"
           width="180px">
-          <i class="el-icon-edit" style="font-size: 18px;margin-right: 10px; cursor: pointer;"></i>
-          <!-- <el-button type="primary">修改</el-button> -->
-          <i class="el-icon-delete" style="font-size: 18px;cursor: pointer;"></i>
-          <!-- <el-button type="danger">删除</el-button> -->
+          <template slot-scope="scope">
+            <i class="el-icon-edit" style="font-size: 18px;margin-right: 10px; cursor: pointer;"></i>
+            <!-- <el-button type="primary">修改</el-button> -->
+            <el-popover
+              :ref="`popover-${scope.row.m_id}`"
+              placement="top"
+              width="160">
+              <p>确定要删除这条信息吗？</p>
+              <div style="text-align: right; margin: 0">
+                <el-button size="mini" type="text" @click="cancal()">取消</el-button>
+                <el-button type="primary" size="mini" @click="deleteMessage(scope.row.m_id)">确定</el-button>
+              </div>
+              <i class="el-icon-delete" slot="reference" style="font-size: 18px;cursor: pointer;"></i>
+            </el-popover>
+            <!-- <el-button type="danger">删除</el-button> -->
+          </template>
         </el-table-column>
       </el-table>
     </div>
+    <el-dialog
+      title="添加信息"
+      :visible.sync="addDialog"
+      :close-on-click-modal="false"
+      :show-close="false"
+      width="30%"
+      >
+      <span style=" display: block; margin-bottom: 5px;">请输入要记录的信息</span>
+      <el-input
+        type="textarea"
+        autosize
+        placeholder="请输入内容"
+        v-model="textarea">
+      </el-input>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="addDialog = false">取 消</el-button>
+        <el-button type="primary" @click="addMessage">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
 <script>
+// ,update
+import {getAll,add,deleteOne} from '@/api/message.js'
 export default {
   name: 'message',
 
   data() {
     return {
       selectIndex:'',
-      tableData:[
-        {
-          data:'2023-9-30',
-          done:'今天也要搭建好框架'
-        },
-        {
-          data:'2023-10-01',
-          done:'今天完成登录功能'
-        },
-        {
-          data:'2023-10-02',
-          done:'今天写完首页的员工增删改查'
-        },
-        {
-          data:'2023-10-03',
-          done:'今天实现面包屑功能'
-        },
-        {
-          data:'2023-10-04',
-          done:'今天我们继续努力，实现个人中心'
-        },
-      ],
+      addDialog:false,
+      textarea:'',
+      tableData:[],
       imgList:[
         "https://t7.baidu.com/it/u=3880073250,1266855579&fm=193&f=GIF",
         "https://t7.baidu.com/it/u=88872022,4285819393&fm=193&f=GIF",
@@ -94,13 +117,36 @@ export default {
   },
 
   mounted() {
-    
+    this.getMessage()
   },
 
   methods: {
-    handleSelectionChange(val){
-      this.selectIndex = val
-      console.log(this.selectIndex)
+    // 获取信息
+    getMessage(){
+      getAll().then(res=>{
+        console.log(res)
+        this.tableData = res
+      })
+    },
+    // 添加信息
+    addMessage(){
+      let data = {
+        data:new Date().toISOString().slice(0,10),
+        content:this.textarea
+      }
+      console.log(data)
+      add(data).then(res=>{
+        console.log(res.msg)
+      })
+      this.getMessage()
+      this.addDialog = false
+    },
+    deleteMessage(id){
+      console.log(id)
+      document.body.click()
+    },
+    cancal(){
+      document.body.click()
     }
   },
 };
@@ -129,6 +175,13 @@ export default {
     .el-icon-delete{
       cursor: pointer;
       font-size: 23px;
+    }
+  }
+  .toDone{
+    .el-table{
+      ::v-deep .el-table__body-wrapper::-webkit-scrollbar{
+        width: 0;
+      }
     }
   }
 
