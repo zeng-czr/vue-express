@@ -141,12 +141,15 @@ export default {
       this.getMessage()
       this.addDialog = false
     },
+    // 删除信息
     deleteMessage(id){
       console.log(id)
       document.body.click()
     },
+    // 控制el-popover的隐藏
     cancal(){
       document.body.click()
+      this.$message.success('user cancels the delete operation')
     }
   },
 };

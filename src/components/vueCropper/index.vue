@@ -15,11 +15,11 @@
       <button @click="change">change</button>
     </div>
     <div class="cropper-right-s" style="width: 150px;height: 150px;">
-      <span>裁剪后正方形头像</span>
+      <span>正方形头像预览</span>
       <img style="width: 100%; height: 100%;" v-show="previewImg" :src="previewImg" alt="">
     </div>
     <div class="cropper-right-c" style="width: 150px;height: 150px;">
-      <span>裁剪后圆形头像</span>
+      <span>圆形头像预览</span>
       <img style="width: 100%; height: 100%; border-radius: 50%;" v-show="previewImg" :src="previewImg" alt="">
     </div>
   </div>
@@ -47,7 +47,7 @@ export default {
 
   methods: {
     change(){
-      this.imgUrl="https://t7.baidu.com/it/u=3880073250,1266855579&fm=193&f=GIF"
+      this.imgUrl=require('@/assets/girl.jpg')
 
     },
     newRealTime(data){
