@@ -89,8 +89,7 @@ export default {
       const worksheet = XLSX.utils.json_to_sheet(this.userList)
       const workbook = XLSX.utils.book_new()
       console.log(worksheet)
-      // const COL_INDEX = 2
-      // worksheet["!cols"].wpx = 50
+      
       // const max_width = worksheet['!cols'].reduce((w,r)=>Math.max(w,r.name.length),10)
       const workName = this.excelName? this.excelName+'.xlsx':'test.xlsx'
       XLSX.utils.book_append_sheet(workbook,worksheet,'Sheet')

@@ -37,7 +37,7 @@ export default {
       imgUrl:this.cropperImg,
       previewImg:null,
       imgObj:{
-        width:200,
+        width:300,
         height:200,
       }
     };
@@ -71,18 +71,20 @@ export default {
     }
   },
   watch:{
-    // imgUrl:{
-    //   handler:function(val){
-    //     console.log("watch触发了")
-    //     const _this = this
-    //     const img = new Image()
-    //     img.url = val
-    //     img.onload = function(){
-    //       _this.imgObj.width = this.width
-    //       _this.imgObj.height = this.height
-    //     }
-    //   }
-    // }
+    imgUrl:{
+      handler:function(val){
+        console.log("watch触发了")
+        const _this = this
+        console.log(this)
+        const img = new Image()
+        console.log(img)
+        img.src = val
+        img.onload = function(){
+          _this.imgObj.width = img.width
+          _this.imgObj.height = img.height
+        }
+      }
+    }
   }
 };
 </script>
@@ -93,6 +95,8 @@ export default {
   /* align-items: center; */
   justify-content: space-between;
   .cropper-left{
+    max-width: 300px;
+    max-height: 200px;
     padding-right: 20px;
     border-right: 2px dotted #333;
   }

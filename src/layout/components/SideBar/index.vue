@@ -2,9 +2,6 @@
   <div>
     <template v-if="!item.children">
       <el-menu-item :index="goRoute(item.path)" v-if="!item.hidden" >
-        <!-- <el-icon>
-          <component :is="item.meta.icon"></component>
-        </el-icon> -->
         <template #title>
           <span>{{ item.meta.title }}</span>
         </template>
@@ -27,12 +24,9 @@
       :index="item.path"
       v-if="item.children && item.children.length > 1"
     >
-      <template #title>
+      <template slot="title">
         <svg-icon class="svg" :icon-class="item.meta.icon" />
-        <!-- <el-icon>
-          <component :is="item.meta.icon"></component>
-        </el-icon> -->
-        <span>{{ item.meta.title }}</span>
+        <span slot="title">{{ item.meta.title }}</span>
       </template>
       <!-- 递归展示子路由 -->
       <sidebar v-for="child in item.children"  :item="child" :key="child.path" :base-path="item.path"></sidebar>
@@ -57,7 +51,6 @@ export default {
   },
   methods: {
     goRoute(routePath){
-      console.log(routePath)
       // 判断链接是否为外部链接
       if (isExternal(routePath)) {
         return routePath
@@ -70,11 +63,21 @@ export default {
   },
 };
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
 .el-menu-item ,.el-submenu{
   .svg{
     margin-right: 10px;
+    font-size: 20px;
   }
-  
 }
+/*由于 element-ui 的<el-menu>标签本身希望里面嵌套的是<el-menu-item>,<el-submenu>,<el-menu-item-group>之一，但是却嵌套了<div>,而导致收折就隐藏不了文字*/
+/*隐藏文字*/
+.el-menu--collapse .el-submenu__title span {
+  display: none;
+}
+/*隐藏 > */
+.el-menu--collapse .el-submenu__title .el-submenu__icon-arrow {
+  display: none;
+}
+
 </style>

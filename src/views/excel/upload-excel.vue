@@ -15,7 +15,7 @@
 <script>
 import UploadExcel from '@/components/uploadExcel/index.vue'
 export default {
-  name: 'VueExpressIndex',
+  name: 'uploadexcel',
 
   data() {
     return {

@@ -1,6 +1,9 @@
 <template>
   <div class="header">
     <div class="board-container">
+      <div class="collapse-container" @click="toggleCollapse()">
+        <svg-icon :icon-class="collapseType"></svg-icon>
+      </div>
       <BreadCrumb/>
     </div>
     <div class="info-container">
@@ -31,6 +34,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import BreadCrumb from '@/components//breadCrumb/index.vue'
 export default {
   name: 'header',
@@ -38,12 +42,17 @@ export default {
   data() {
     return {
       imageUrl:'',
+      collapseType:this.isCollapse?'menu-fold':'menu-unfold',
     };
   },
   components:{
     BreadCrumb
   },
   computed:{
+    ...mapGetters(['isCollpase']),
+    // isCollapse(){
+    //   return this.$store.state.public.isCollapse
+    // },
     state_avatar(){
       return this.$store.state.user.avatar
     }
@@ -54,10 +63,16 @@ export default {
   watch:{
     state_avatar(newVal){
       this.imageUrl = newVal
+    },
+    isCollapse(newV){
+      console.log(newV)
     }
   },
   methods: {
-    
+    toggleCollapse(){
+      console.log("执行了。。。。。。")
+      this.$store.dispatch('public/toggleCollapse')
+    },
   },
 };
 </script>
@@ -67,6 +82,15 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  .board-container{
+    display: flex;
+    align-items: center;
+    .collapse-container{
+      font-size: 24px;
+      margin-right: 20px;
+      cursor: pointer;
+    }
+  }
   .info-container{
     margin-right: 40px;
     .info{

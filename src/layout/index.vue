@@ -1,8 +1,9 @@
 <template>
   <div class="app-wrapper">
     <el-container>
-      <el-aside style="overflow: hidden;width:200px">
+      <el-aside :class="isCollapse?'collapse':'notCollapse'">
         <el-menu
+        :collapse = "isCollapse"
         ref="menu"
         :default-active="this.$route.path"
         :unique-opened="false"
@@ -34,7 +35,7 @@ export default {
   },
   data() {
     return {
-      
+
     };
   },
 
@@ -42,12 +43,7 @@ export default {
     
   },
   computed:{
-    ...mapGetters(['permission_routes','token']),
-    activeMenu() {
-      // const route = String(this.$route.path)
-      // let path = route.substr(route.lastIndexOf("/") + 1)
-      return this.$route.path
-    },
+    ...mapGetters(['permission_routes','isCollapse']),
   },
 
   methods: {
@@ -60,8 +56,14 @@ app-wrapper{
   width: 100%;
   height: 100%;
 }
-/* .el-main{
-  margin: 0 !important;
-  padding: 0 !important;
-} */
+.collapse{
+  width: 64px !important;
+  transition: 1s width;
+  overflow: hidden !important;
+}
+.notCollapse{
+  width: 200px !important;
+  transition: 1s width;
+  overflow: hidden !important;
+}
 </style>
