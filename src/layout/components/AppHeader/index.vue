@@ -2,12 +2,15 @@
   <div class="header">
     <div class="board-container">
       <div class="collapse-container" @click="toggleCollapse()">
-        <svg-icon :icon-class="collapseType"></svg-icon>
+        <svg-icon class="svg-collapse" style="color: #fff;" :icon-class="collapseType"></svg-icon>
       </div>
       <BreadCrumb/>
     </div>
     <div class="info-container">
       <div class="info">
+        <div class="userName">
+          <span>{{ name }}您好！欢迎您</span>
+        </div>
         <div class="vartar">
           <img v-if="imageUrl" :src="imageUrl" alt="">
           <img v-else src="@/assets/vartar.jpg" alt="">
@@ -42,14 +45,14 @@ export default {
   data() {
     return {
       imageUrl:'',
-      collapseType:this.isCollapse?'menu-fold':'menu-unfold',
+      collapseType:'menu-unfold',
     };
   },
   components:{
     BreadCrumb
   },
   computed:{
-    ...mapGetters(['isCollpase']),
+    ...mapGetters(['isCollapse','name']),
     // isCollapse(){
     //   return this.$store.state.public.isCollapse
     // },
@@ -65,6 +68,11 @@ export default {
       this.imageUrl = newVal
     },
     isCollapse(newV){
+      if(newV==true){
+        this.collapseType='menu-fold'
+      }else{
+        this.collapseType='menu-unfold'
+      }
       console.log(newV)
     }
   },
@@ -77,6 +85,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+@import '@/style/theme/handle.scss';
 .header{
   height: 60px;
   display: flex;
@@ -96,6 +105,13 @@ export default {
     .info{
       display: flex;
       align-items: center;
+      .userName{
+        margin-right: 20px;
+        span{
+        font-weight: bold;
+        // @include font_color('bgColor3');
+        }
+      }
       .vartar{
         width: 40px;
         height: 40px;
@@ -110,6 +126,9 @@ export default {
         margin-left: 20px;
         cursor: pointer;
         text-align: center;
+        span{
+          // @include font_color('fontColor1')
+        }
       }
     }
   }

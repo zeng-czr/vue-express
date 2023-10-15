@@ -40,6 +40,7 @@ export default {
       this.$message.warning("please do not upload more than 1mb of file")
       return false
     },
+    // 获取成功后的返回过来的数据
     handleSuccess({results,header}){
       this.tableData =  results
       this.tableHeader = header

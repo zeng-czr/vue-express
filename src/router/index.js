@@ -90,22 +90,34 @@ export const asyncRoutes = [
       }
     ]
   },
-  // {
-  //   path: '/zip',
-  //   component: Layout,
-  //   redirect: '/zip/download',
-  //   alwaysShow: true,
-  //   name: 'Zip',
-  //   meta: { title: 'Zip', icon: 'zip' },
-  //   children: [
-  //     {
-  //       path: 'download',
-  //       component: () => import('@/views/zip/index'),
-  //       name: 'ExportZip',
-  //       meta: { title: 'Export Zip' }
-  //     }
-  //   ]
-  // },
+  {
+    path: '/directive',
+    component: Layout,
+    redirect: '/directive/copy',
+    name: 'Copy',
+    alwayShow: true,
+    meta: { title: 'Directive', icon: 'clipboard' },
+    children: [
+      {
+        path: 'copy',
+        component: () => import('@/views/directive/copy.vue'),
+        name: 'copy',
+        meta: { title: 'copy' }
+      },
+      {
+        path: 'debounce',
+        component: () => import('@/views/directive/debounce.vue'),
+        name: 'debounce',
+        meta: { title: 'debounce' }
+      },
+      {
+        path: 'permission',
+        component: () => import('@/views/directive/permission.vue'),
+        name: 'permission',
+        meta: { title: 'permission' }
+      }
+    ]
+  },
 
   // {
   //   path: '/pdf',

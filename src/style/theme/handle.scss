@@ -1,0 +1,29 @@
+// 导入主题色
+@import './themes.scss';
+
+@mixin themeify{
+  @each $theme-name,$theme-map in $themes{//$theme-name和$theme-map相当于我们的for循环的key和value
+    $theme-map:$theme-map !global; //global声明变量为全局变量
+    [data-theme = "#{$theme-name}"] & {//content相当于插槽slot
+      @content
+    }
+  }
+};
+
+@function themed($key){//map中的键值对，取出值
+  @return map-get($theme-map,$key)
+};
+
+@mixin background_color($color){
+  background-color: $color;
+  @include themeify{
+    background-color: themed($color) !important;
+  }
+};
+
+@mixin font_color($color){
+  color: $color;
+  @include themeify{
+    color: themed($color) !important;
+  }
+}

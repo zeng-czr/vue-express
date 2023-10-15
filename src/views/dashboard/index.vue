@@ -36,6 +36,7 @@
           <el-button type="danger">删除</el-button>
         </el-table-column>
       </el-table>
+      <button @click="changeColor">变换颜色</button>
     </div>
   </div>
 </template>
@@ -62,22 +63,12 @@ export default {
         this.userList = res
         console.log(this.userList)
       })
-      
+    },
+    changeColor(){
+      window.document.documentElement.setAttribute('data-theme', 'dark')
     }
   },
 };
 </script>
 <style lang="scss" scoped>
-// .container{
-//   position: relative;
-//   .header-container{
-//     z-index: 2;
-//     position:absolute;
-//     right: 28px;
-//   }
-//   .main-container{
-//     padding-top: 50px;
-//   }
-// }
-
 </style>

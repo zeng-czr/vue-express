@@ -58,17 +58,35 @@ export default {
       if (isExternal(this.basePath)) {
         return this.basePath
       }
+      console.log(this.basePath)
       return path.resolve(this.basePath, routePath)
     },
   },
 };
 </script>
 <style lang="scss">
+.el-menu{
+  border:none !important;
+}
 .el-menu-item ,.el-submenu{
+  span{
+    color: #ffffff;
+  }
+  background-color: #333;
   .svg{
     margin-right: 10px;
     font-size: 20px;
+    color: #ffffff;
   }
+}
+.el-submenu__title:hover{
+  background-color: black !important;
+}
+.el-menu-item.is-active{
+    background-color: black !important;
+}
+.el-menu-item:hover{
+  background-color: black !important;
 }
 /*由于 element-ui 的<el-menu>标签本身希望里面嵌套的是<el-menu-item>,<el-submenu>,<el-menu-item-group>之一，但是却嵌套了<div>,而导致收折就隐藏不了文字*/
 /*隐藏文字*/

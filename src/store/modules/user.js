@@ -45,15 +45,13 @@ const actions = {
   },
   getInfo ({ commit }) {
     return new Promise((resolve, reject) => {
-      // commit('SET_ROLES', ['admin'])
-      // resolve(['admin'])
       let roleList = []
       login({ username: "admin", password: "123456" }).then(response => {
         const data = response
         if (data.length > 0) {
           console.log(data)
           commit('SET_ROLES', data[0].role)
-          commit('SET_NAME', data[0].name)
+          commit('SET_NAME', data[0].username)
           commit('SET_AVATOR', data[0].avatar)
           resolve(data[0])
         }

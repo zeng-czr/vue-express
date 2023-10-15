@@ -1,8 +1,11 @@
 <template>
-  <div class="app-main">
-    <!-- 二级路由入口 -->
-    <router-view :key="key"/>
-  </div>
+    <div class="app-main">
+      <transition name="fade-transform" mode="out-in">
+        <!-- 二级路由入口 -->
+        <router-view :key="key"/>
+      </transition>
+    </div>
+  
 </template>
 
 <script>
@@ -28,3 +31,8 @@ export default {
   },
 };
 </script>
+<style>
+.app-main {
+  overflow: hidden;
+}
+</style>
